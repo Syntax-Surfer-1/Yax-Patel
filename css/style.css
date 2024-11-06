@@ -2345,3 +2345,51 @@ Time line
   height: 200px;
   max-height: 250px;
 }
+
+.tooltiptext {
+  position: fixed;
+  visibility: hidden;
+  background-color: rgba(170, 170, 170, .3) ;
+  backdrop-filter: blur(5px);
+  color: white;
+  padding: 10px;
+  /* border-radius: 5px; */
+  z-index: 100;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  width: 280px;
+  height: 240px;
+}
+
+/* Box styling inside tooltip */
+.tooltiptext .box {
+  width: 100%;
+  height: 80%;
+  margin-bottom: 5px;
+  position: relative;
+  overflow: hidden;
+}
+
+.tooltiptext img {
+  width: 100%;    /* Set fixed width */
+  height: 100%;   /* Set fixed height */
+  display: block;
+  object-fit: cover;  /* Ensure the image covers the box */
+  opacity: 0;       /* Start as invisible */
+  transition: opacity 1s ease;  /* Smooth transition for opacity */
+}
+
+/* Tooltip info text styling */
+.tooltiptext p {
+  margin: 0;
+  font-size: 14px;
+}
+
+/* Visible state for tooltip */
+.tooltiptext.visible {
+  visibility: visible;
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.1);
+}

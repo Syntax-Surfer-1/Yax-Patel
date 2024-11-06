@@ -1,3 +1,62 @@
+const tooltip = document.querySelector('.tooltiptext');
+const listItems = document.querySelectorAll('.gsap-reveal-hero');
+const tooltipInfo = document.querySelector('.tooltip-info');
+const tooltipImage = document.querySelector('.tooltiptext img');
+
+let currentIndex = 0;
+let images = [];
+let slideshowInterval;
+
+// Show tooltip when hovering over list items
+listItems.forEach(item => {
+  item.addEventListener('mousemove', (e) => {
+    // Get mouse position
+    const mouseX = e.clientX;
+    const mouseY = e.clientY;
+
+    // Update tooltip position
+    tooltip.style.left = mouseX + 170 + 'px';  // Offset tooltip to the right
+    tooltip.style.top = mouseY + 160 + 'px';   // Offset tooltip below the pointer
+
+    // Get the info and images from the data attributes
+    const info = item.getAttribute('data-tooltip-info');
+    const imageURLs = item.getAttribute('data-tooltip-images').split('|');
+
+    tooltipInfo.textContent = info; // Update the tooltip text dynamically
+    images = imageURLs;             // Split the image URLs into an array
+    currentIndex = 0;               // Reset to first image
+    tooltipImage.src = images[currentIndex]; // Set the initial image
+
+    // Make the tooltip visible
+    tooltip.classList.add('visible');
+
+    // Clear any previous slideshow interval
+    clearInterval(slideshowInterval);
+
+    // Start automatic slideshow with smooth transition
+    slideshowInterval = setInterval(() => {
+      // Fade out image
+      tooltipImage.style.opacity = 0;
+
+      // Wait for the opacity transition to complete before changing the image
+      setTimeout(() => {
+        currentIndex = (currentIndex === images.length - 1) ? 0 : currentIndex + 1;
+        tooltipImage.src = images[currentIndex]; // Update image source
+
+        // Fade in image after updating the source
+        tooltipImage.style.opacity = 1;
+      }, 800); // 800ms matches the CSS transition duration
+    }, 2500); // Change image every 2.5 seconds
+  });
+
+  // Hide tooltip and stop the slideshow when mouse leaves
+  item.addEventListener('mouseleave', () => {
+    tooltip.classList.remove('visible');
+    clearInterval(slideshowInterval); // Stop slideshow when mouse leaves
+  });
+});
+
+
 AOS.init({
  	duration: 800,
  	easing: 'ease',
