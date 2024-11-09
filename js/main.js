@@ -733,3 +733,17 @@ var animateReveal = function() {
 
 }
 
+gsap.to(".item", {
+	y: 5, // Moves the image 10px up
+	repeat: -1, // Infinite loop
+	yoyo: true, // Reverses the animation for a floating effect
+	duration: 1, // Animation duration
+	ease: "power1.inOut" // Ease effect for smoothness
+});
+
+
+new kursor({
+	type: 1,
+	color: '#ffffff',
+	removeDefaultCursor: true,	
+})
